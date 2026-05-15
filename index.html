@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    /* The fix: added user-scalable=no to prevent unwanted mobile zooming */
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Sovereign Suite</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
@@ -17,6 +18,8 @@
             justify-content: center; align-items: center; min-height: 100vh; 
             text-align: center; background-size: cover; background-position: center;
             background-attachment: fixed; transition: background 2s ease;
+            /* Ensuring no accidental overflow zooms */
+            overflow: hidden;
         }
 
         .bg-default {
@@ -29,25 +32,25 @@
                               url('IMG_5825.jpeg');
         }
 
-        /* The 25% Reduction: Sleeker, tighter vault */
         .vault { 
             border: 1px solid #2a2a2a; padding: 20px 15px; 
             background: rgba(10, 10, 10, 0.8); box-shadow: 0 0 50px #000;
             width: 80%; max-width: 320px; position: relative; z-index: 10;
             backdrop-filter: blur(6px);
+            /* Added to prevent the box from shifting layout on load */
+            margin: auto;
         }
 
         h1 { font-family: 'Cinzel', serif; letter-spacing: 6px; text-transform: uppercase; font-size: 1.1rem; color: #fff; margin-bottom: 2px; }
         .header-sub { font-style: italic; color: var(--gold); font-size: 0.6rem; margin-bottom: 15px; letter-spacing: 1px; }
 
-        input { background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; padding: 8px; width: 85%; outline: none; margin-bottom: 10px; text-align: center; font-size: 0.75rem; }
+        input { background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; padding: 8px; width: 85%; outline: none; margin-bottom: 10px; text-align: center; font-size: 0.75rem; border-radius: 0; -webkit-appearance: none; }
 
-        /* Minimalist Messaging Box */
         textarea { 
             background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; 
             padding: 8px; width: 85%; outline: none; margin-bottom: 10px; 
-            height: 55px; /* Shrunk for maximum visibility */
-            resize: none; overflow-y: auto; font-family: 'Georgia', serif; font-size: 0.8rem;
+            height: 55px; resize: none; overflow-y: auto; font-family: 'Georgia', serif; font-size: 0.8rem;
+            border-radius: 0; -webkit-appearance: none;
         }
         
         textarea::-webkit-scrollbar { width: 2px; }
@@ -60,11 +63,9 @@
         }
         .btn:hover { background: var(--gold); color: #000; }
 
-        /* Compact feed */
         .feed { 
             text-align: left; margin-top: 15px; 
-            height: 200px; /* Reduced to pull focus to the background */
-            overflow-y: auto; border-top: 1px solid #222; padding-top: 10px; 
+            height: 200px; overflow-y: auto; border-top: 1px solid #222; padding-top: 10px; 
             scrollbar-width: none;
         }
         .feed::-webkit-scrollbar { width: 2px; }
