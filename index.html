@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap');
 
-        :root { --gold: #d4af37; --dark: #050505; --grey: #8e8e8e; }
+        :root { --gold: #d4af37; --dark: #050505; --grey: #707070; }
         
         body { 
             margin: 0; background: var(--dark); color: var(--gold); 
@@ -27,18 +27,19 @@
             width: 80%;
             max-width: 320px;
             margin: auto;
+            margin-top: 100px; /* Space for the beast above */
         }
 
-        /* The Grey Alpha - Large & Detailed */
+        /* The True Alpha Silhouette - Grey and Massive */
         .wolf-icon {
             position: absolute;
-            top: -100px; /* Adjusted for double size */
+            top: -140px; 
             left: 50%;
             transform: translateX(-50%);
-            width: 120px; /* Twice the size */
-            height: 120px;
+            width: 160px; /* Substantial presence */
+            height: 160px;
             fill: var(--grey);
-            filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.9));
             z-index: 11;
             pointer-events: none;
         }
@@ -55,13 +56,6 @@
 
         input { background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; padding: 8px; width: 85%; outline: none; margin-bottom: 10px; text-align: center; font-size: 0.75rem; border-radius: 0; -webkit-appearance: none; }
 
-        textarea { 
-            background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; 
-            padding: 8px; width: 85%; outline: none; margin-bottom: 10px; 
-            height: 55px; resize: none; overflow-y: auto; font-family: 'Georgia', serif; font-size: 0.8rem;
-            border-radius: 0; -webkit-appearance: none;
-        }
-        
         .btn { 
             border: 1px solid var(--gold); padding: 10px; color: var(--gold); 
             cursor: pointer; background: transparent; letter-spacing: 2px; 
@@ -78,17 +72,9 @@
 <body>
 
     <div class="vault-container" id="gatekeeper">
-        <!-- New Detailed Grey Wolf Icon -->
-        <svg class="wolf-icon" viewBox="0 0 100 100">
-            <path d="M50 5 L55 25 L75 20 L65 35 L85 45 L70 55 L80 75 L60 70 L50 90 L40 70 L20 75 L30 55 L15 45 L35 35 L25 20 L45 25 Z" fill="none" />
-            <!-- Silhouette of a Howling Wolf -->
-            <path d="M48,15c0,0-5,10-15,15c-5,3-12,5-12,5s8,2,12,5c5,3,8,12,8,12s2-8,5-10s10-5,10-5s-8-2-10-5S48,15,48,15z M35,42c-2,10-8,15-15,18c10,2,15,8,18,15c2-10,8-15,15-18C43,55,38,49,35,42z" opacity="0.1"/>
-            <path d="M75.5,85.2c-1.1-2.3-3.2-5.4-4.8-6.2c-1.6-0.8-4.1-1-5.8-0.2c-1.7,0.8-2.6,3.4-3.4,5.4c-0.8,2-3,4.4-3,4.4s2.4,0.4,4.2-0.6c1.8-1,2.8-3.6,4.6-4.2c1.8-0.6,4.6,0.2,5.8,1.4C74.3,86.6,76.6,87.5,75.5,85.2z" opacity="0.3"/>
-            <path d="M50,10 C45,25,30,35,15,40 C30,45,40,55,45,75 C50,60,65,50,85,45 C70,40,55,30,50,10" />
-            <!-- Realistic Howling Wolf Silhouette -->
-            <path d="M38.2,35.5c0,0-2.1-4.8-5.3-7.4c-3.2-2.6-9.1-4.8-9.1-4.8s4.3,2.4,6.4,5.3c2.1,2.9,3.7,8,3.7,8s1.6-5.3,4.8-7.4c3.2-2.1,9.6-3.7,9.6-3.7s-5.9,1.1-8,3.2C38.2,30.7,38.2,35.5,38.2,35.5z M50,5c0,0-2,10-10,18c-8,8-15,10-25,12c15,5,20,12,25,25c5-15,12-20,25-25c-10-2-17-4-25-12C50,15,50,5,50,5z"/>
-            <!-- Detailed profile -->
-            <path d="M50,5 L52,15 C52,15 65,25 85,30 C65,35 55,50 52,70 C50,60 45,60 42,70 C39,50 29,35 9,30 C29,25 42,15 42,15 L44,5 L50,5 Z" />
+        <!-- The Howling Alpha Silhouette -->
+        <svg class="wolf-icon" viewBox="0 0 512 512">
+            <path d="M414.7 122.3C401 108.7 360.5 83 318.5 76c-3.1-.5-6.1-1.1-9-1.6 3-17.7 13.9-34.1 30.5-43.2 5.5-3 6.3-10.7 1.4-14.7-4.1-3.3-10-3.3-14.2 0-36.4 28.5-44.1 76-35.3 118.8-3.4 16.5-9.1 32.5-16.7 47.4-13 25.4-32.3 47.1-56.1 63.3-21.7 14.8-46.3 25.1-72.2 30.2-22.3 4.4-45.2 5.6-67.9 3.5-13.4-1.2-26.6-4-39.4-8.3-5.7-1.9-11.9 1.1-13.8 6.8-.7 2.1-.7 4.4 0 6.5 6.6 19.3 17 37 30.3 52.4 17.6 20.4 39.4 36.9 64.1 48.4 20.6 9.6 42.6 15.6 65.3 17.8 28.8 2.8 57.9.6 86-6.4 26.6-6.6 52.1-17.8 75.3-33.1 27.8-18.4 51.1-42.5 68.3-70.8 13.3-21.9 22.3-46.1 26.5-71.4 5.3-32.3 1.9-65.5-9.8-96.1z"/>
         </svg>
         
         <div class="vault">
@@ -105,8 +91,7 @@
             <p class="header-sub" id="tagline"></p>
             <div class="feed" id="liveFeed"></div>
             <div id="interactionZone">
-                <textarea id="userMsg" placeholder="Leave a scent..."></textarea>
-                <input type="file" id="file-upload" style="display:none;" accept="image/*">
+                <textarea id="userMsg" placeholder="Leave a scent..." style="background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; padding: 8px; width: 85%; outline: none; margin-bottom: 10px; height: 55px; resize: none; overflow-y: auto; font-family: 'Georgia', serif; font-size: 0.8rem;"></textarea>
                 <button class="btn" id="sendBtn" onclick="sendData()">Submit</button>
                 <button class="btn" id="burnBtn" style="display:none; color:#700; border-color:#400; margin-top:10px; font-size: 0.45rem;" onclick="burnTheVault()">PURGE VAULT</button>
             </div>
@@ -124,7 +109,6 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        const imgbbKey = "318eb162e33966a8be888187ab3997f0";
         let userRole = "";
 
         function authenticate() {
@@ -156,26 +140,16 @@
                 feed.innerHTML = "";
                 snapshot.forEach((child) => {
                     const data = child.val();
-                    const isArchitect = userRole === "The Architect";
-                    let content = `<p style="color:#eee; font-size: 0.75rem;">${data.text}</p>`;
-                    if (data.img && isArchitect) {
-                        content += `<img src="${data.img}" style="max-width:100%; margin-top:8px; border:1px solid #222;">`;
-                    } else if (data.img) {
-                        content += `<p style="font-style:italic; color:var(--gold); font-size:0.65rem; margin-top:5px;">The Architect is watching... 😉</p>`;
-                    }
-                    feed.innerHTML = `<div class="drop"><div class="drop-user">${data.user}</div>${content}</div>` + feed.innerHTML;
+                    feed.innerHTML = `<div class="drop"><div class="drop-user">${data.user}</div><p style="color:#eee; font-size: 0.75rem;">${data.text}</p></div>` + feed.innerHTML;
                 });
             });
         }
 
-        async function sendData() {
+        function sendData() {
             const text = document.getElementById('userMsg').value;
-            const btn = document.getElementById('sendBtn');
             if (!text) return;
-            btn.innerText = "...";
             db.ref('vault').push({ user: userRole, text: text, timestamp: Date.now() });
             document.getElementById('userMsg').value = "";
-            btn.innerText = "Submit";
         }
 
         function burnTheVault() { if (confirm("Erase every trace?")) db.ref('vault').remove(); }
