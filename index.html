@@ -22,7 +22,6 @@
                               url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?auto=format&fit=crop&q=80&w=2070');
         }
 
-        /* Shrinking the container for better visibility */
         .vault-container { width: 80%; max-width: 300px; display: flex; flex-direction: column; align-items: center; }
 
         .vault { 
@@ -53,7 +52,6 @@
             padding: 8px; display: block; margin-bottom: 12px; width: 85%;
         }
 
-        /* Compact feed for better background exposure */
         .feed { text-align: left; margin-top: 15px; height: 220px; overflow-y: auto; border-top: 1px solid #222; padding-top: 10px; scrollbar-width: none; }
         .drop { background: rgba(15, 15, 15, 0.6); padding: 10px; border-left: 1px solid var(--gold); margin-bottom: 10px; }
         .drop-user { font-family: 'Cinzel'; font-size: 0.45rem; color: #555; text-transform: uppercase; margin-bottom: 3px; }
@@ -68,9 +66,9 @@
     <div class="vault-container" id="gatekeeper">
         <div class="vault">
             <h1>Sovereign</h1>
-            <p class="header-sub">Architectural Access Required</p>
-            <input type="text" id="nameInput" placeholder="Identity?">
-            <button class="btn" onclick="authenticate()">Enter</button>
+            <p class="header-sub">Exclusive Access Protocol</p>
+            <input type="text" id="nameInput" placeholder="Who enters?">
+            <button class="btn" onclick="authenticate()">Claim Access</button>
         </div>
     </div>
 
@@ -80,13 +78,13 @@
             <p class="header-sub" id="tagline"></p>
             <div class="feed" id="liveFeed"></div>
             <div id="interactionZone">
-                <textarea id="userMsg" placeholder="Message..."></textarea>
+                <textarea id="userMsg" placeholder="Leave a scent..."></textarea>
                 
                 <label class="file-label" for="file-upload">UPLOAD EVIDENCE (+)</label>
                 <input type="file" id="file-upload" style="display:none;" accept="image/*">
                 
-                <button class="btn" id="sendBtn" onclick="sendData()">Submit</button>
-                <button class="btn" id="burnBtn" style="display:none;" onclick="burnTheVault()">PURGE VAULT</button>
+                <button class="btn" id="sendBtn" onclick="sendData()">Submit Transmission</button>
+                <button class="btn" id="burnBtn" style="display:none;" onclick="burnTheVault()">PURGE ALL RECORDS</button>
             </div>
         </div>
     </div>
@@ -109,6 +107,7 @@
             const nameInput = document.getElementById("nameInput").value.trim();
             const body = document.body;
             
+            // STRICT GATEKEEPING
             if (nameInput === "The Architect") { 
                 userRole = "The Architect"; 
                 document.getElementById("burnBtn").style.display = "block";
@@ -117,11 +116,14 @@
                 userRole = "Amanda"; 
                 body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.65), rgba(5, 5, 5, 0.65)), url('IMG_5825.jpeg')";
             } else { 
-                userRole = nameInput; 
+                // DENIED
+                alert("Access Denied. You don't belong here.");
+                document.getElementById("nameInput").value = "";
+                return;
             }
 
             document.getElementById("displayTitle").innerText = userRole.toUpperCase();
-            document.getElementById("tagline").innerText = (userRole === "The Architect") ? "System Overridden." : "Welcome home.";
+            document.getElementById("tagline").innerText = (userRole === "The Architect") ? "Control the hunt." : "Welcome home, Lone Wolf.";
             document.getElementById("gatekeeper").style.display = "none";
             document.getElementById("suiteContent").style.display = "block";
             document.getElementById("interactionZone").style.display = "block";
@@ -148,7 +150,6 @@
             let imageUrl = "";
 
             if (!text && !fileInput.files[0]) return;
-
             btn.innerText = "...";
             
             if (fileInput.files[0]) {
@@ -164,11 +165,11 @@
             db.ref('vault').push({ user: userRole, text: text, img: imageUrl, timestamp: Date.now() });
             document.getElementById('userMsg').value = "";
             fileInput.value = "";
-            btn.innerText = "Submit";
+            btn.innerText = "Submit Transmission";
         }
 
         function burnTheVault() { 
-            if (confirm("Erase all data from the Sovereign Vault?")) {
+            if (confirm("Erase all evidence of the hunt?")) {
                 db.ref('vault').remove(); 
             }
         }
