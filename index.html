@@ -18,12 +18,13 @@
             text-align: center; background-size: cover; background-position: center;
             background-attachment: fixed; transition: background 2s ease;
             overflow: hidden;
-            /* NEW ENTRY BACKGROUND: The Alpha Wolf */
-            background-image: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.7)), 
-                              url('https://images.unsplash.com/photo-1590422443890-2e303960309e?auto=format&fit=crop&q=80&w=2070');
         }
 
-        /* The Ghost Protocol (Amanda's internal page) remains her masterpiece */
+        .bg-default {
+            background-image: linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95)), 
+                              url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070');
+        }
+
         .bg-ghost {
             background-image: linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.75)), 
                               url('IMG_5825.jpeg');
@@ -31,10 +32,10 @@
 
         .vault { 
             border: 1px solid #2a2a2a; padding: 20px 15px; 
-            background: rgba(10, 10, 10, 0.85); box-shadow: 0 0 50px #000;
+            background: rgba(10, 10, 10, 0.8); box-shadow: 0 0 50px #000;
             width: 80%; max-width: 320px; position: relative; z-index: 10;
             backdrop-filter: blur(6px);
-            margin: auto;
+            margin: auto; /* Keeps it centered */
         }
 
         h1 { font-family: 'Cinzel', serif; letter-spacing: 6px; text-transform: uppercase; font-size: 1.1rem; color: #fff; margin-bottom: 2px; }
@@ -49,6 +50,9 @@
             border-radius: 0; -webkit-appearance: none;
         }
         
+        textarea::-webkit-scrollbar { width: 2px; }
+        textarea::-webkit-scrollbar-thumb { background: var(--gold); }
+
         .btn { 
             border: 1px solid var(--gold); padding: 10px; color: var(--gold); 
             cursor: pointer; background: transparent; letter-spacing: 2px; 
@@ -61,6 +65,8 @@
             height: 200px; overflow-y: auto; border-top: 1px solid #222; padding-top: 10px; 
             scrollbar-width: none;
         }
+        .feed::-webkit-scrollbar { width: 2px; }
+        .feed::-webkit-scrollbar-thumb { background: var(--gold); }
 
         .drop { background: rgba(15, 15, 15, 0.4); padding: 12px; border-left: 1px solid var(--gold); margin-bottom: 8px; }
         .drop-user { font-family: 'Cinzel'; font-size: 0.45rem; color: #444; margin-bottom: 2px; }
@@ -69,13 +75,13 @@
         #interactionZone { display: none; }
     </style>
 </head>
-<body>
+<body class="bg-default">
 
     <div class="vault" id="gatekeeper">
         <h1>Sovereign</h1>
-        <p class="header-sub">Alpha Presence Detected</p>
-        <input type="text" id="nameInput" placeholder="Who enters?">
-        <button class="btn" onclick="authenticate()">Claim Access</button>
+        <p class="header-sub">Validation Required</p>
+        <input type="text" id="nameInput" placeholder="Credentials">
+        <button class="btn" onclick="authenticate()">Unseal</button>
     </div>
 
     <div class="vault" id="suiteContent" style="display:none;">
@@ -83,10 +89,10 @@
         <p class="header-sub" id="tagline"></p>
         <div class="feed" id="liveFeed"></div>
         <div id="interactionZone">
-            <textarea id="userMsg" placeholder="Leave a scent..."></textarea>
-            <label class="file-label" for="file-upload">TRANSMIT EVIDENCE (+)</label>
+            <textarea id="userMsg" placeholder="A thought..."></textarea>
+            <label class="file-label" for="file-upload">VISUAL EVIDENCE (+)</label>
             <input type="file" id="file-upload" style="display:none;" accept="image/*">
-            <button class="btn" id="sendBtn" onclick="sendData()">Submit</button>
+            <button class="btn" id="sendBtn" onclick="sendData()">Transmit</button>
             <button class="btn" id="burnBtn" style="display:none; color:#700; border-color:#400; margin-top:10px; font-size: 0.45rem;" onclick="burnTheVault()">PURGE VAULT</button>
         </div>
     </div>
@@ -114,13 +120,13 @@
                 document.getElementById("burnBtn").style.display = "block";
             } else if (nameInput.toLowerCase() === "amanda") { 
                 userRole = "Amanda"; 
-                body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.75)), url('IMG_5825.jpeg')";
+                body.className = "bg-ghost"; 
             } else { 
                 userRole = nameInput; 
             }
 
             document.getElementById("displayTitle").innerText = userRole.toUpperCase();
-            document.getElementById("tagline").innerText = (userRole === "The Architect") ? "Control the hunt." : "Welcome home, Lone Wolf.";
+            document.getElementById("tagline").innerText = (userRole === "The Architect") ? "Design with intent." : "Behold the masterpiece.";
             document.getElementById("gatekeeper").style.display = "none";
             document.getElementById("suiteContent").style.display = "block";
             document.getElementById("interactionZone").style.display = "block";
@@ -139,7 +145,7 @@
                         if (isArchitect) {
                             content += `<img src="${data.img}" style="max-width:100%; margin-top:8px;">`;
                         } else {
-                            content += `<p style="font-style:italic; color:var(--gold); font-size:0.65rem; margin-top:5px;">The Architect is watching... 😉</p>`;
+                            content += `<p style="font-style:italic; color:var(--gold); font-size:0.65rem; margin-top:5px;">The Architect is admiring your gift... 😉</p>`;
                         }
                     }
                     feed.innerHTML = `<div class="drop"><div class="drop-user">${data.user}</div>${content}</div>` + feed.innerHTML;
@@ -167,7 +173,7 @@
             db.ref('vault').push({ user: userRole, text: text, img: imageUrl, timestamp: Date.now() });
             document.getElementById('userMsg').value = "";
             fileInput.value = "";
-            btn.innerText = "Submit";
+            btn.innerText = "Transmit";
         }
 
         function burnTheVault() { if (confirm("Erase every trace?")) db.ref('vault').remove(); }
