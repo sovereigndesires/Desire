@@ -16,25 +16,18 @@
             font-family: 'Playfair Display', serif; display: flex; 
             justify-content: center; align-items: center; min-height: 100vh; 
             text-align: center; background-size: cover; background-position: center;
-            background-attachment: fixed; transition: background 2s ease;
+            background-attachment: fixed; transition: background 1.5s ease-in-out;
             overflow: hidden;
-            /* NEW ENTRY BACKGROUND: The Alpha Wolf */
+            /* DEFAULT LOGIN: The Alpha Wolf */
             background-image: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.7)), 
                               url('https://images.unsplash.com/photo-1590422443890-2e303960309e?auto=format&fit=crop&q=80&w=2070');
-        }
-
-        /* The Ghost Protocol (Amanda's internal page) remains her masterpiece */
-        .bg-ghost {
-            background-image: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.8)), 
-                              url('IMG_5825.jpeg');
         }
 
         .vault { 
             border: 1px solid #2a2a2a; padding: 20px 15px; 
             background: rgba(10, 10, 10, 0.85); box-shadow: 0 0 50px #000;
             width: 80%; max-width: 320px; position: relative; z-index: 10;
-            backdrop-filter: blur(6px);
-            margin: auto;
+            backdrop-filter: blur(6px); margin: auto;
         }
 
         h1 { font-family: 'Cinzel', serif; letter-spacing: 6px; text-transform: uppercase; font-size: 1.1rem; color: #fff; margin-bottom: 2px; }
@@ -56,11 +49,9 @@
         }
         .btn:hover { background: var(--gold); color: #000; }
 
-        .feed { 
-            text-align: left; margin-top: 15px; 
-            height: 200px; overflow-y: auto; border-top: 1px solid #222; padding-top: 10px; 
-            scrollbar-width: none;
-        }
+        .feed { text-align: left; margin-top: 15px; height: 200px; overflow-y: auto; border-top: 1px solid #222; padding-top: 10px; scrollbar-width: none; }
+        .feed::-webkit-scrollbar { width: 2px; }
+        .feed::-webkit-scrollbar-thumb { background: var(--gold); }
 
         .drop { background: rgba(15, 15, 15, 0.4); padding: 12px; border-left: 1px solid var(--gold); margin-bottom: 8px; }
         .drop-user { font-family: 'Cinzel'; font-size: 0.45rem; color: #444; margin-bottom: 2px; }
@@ -112,11 +103,16 @@
             if (nameInput === "The Architect") { 
                 userRole = "The Architect"; 
                 document.getElementById("burnBtn").style.display = "block";
+                // Inner sanctum for Architect: Clean architectural vibe
+                body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070')";
             } else if (nameInput.toLowerCase() === "amanda") { 
                 userRole = "Amanda"; 
+                // Inner sanctum for Amanda: The Ghost Protocol
                 body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.75)), url('IMG_5825.jpeg')";
             } else { 
                 userRole = nameInput; 
+                // Default fallback if anyone else enters
+                body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95))";
             }
 
             document.getElementById("displayTitle").innerText = userRole.toUpperCase();
@@ -137,7 +133,7 @@
                     let content = `<p style="color:#eee; font-size: 0.75rem;">${data.text}</p>`;
                     if (data.img) {
                         if (isArchitect) {
-                            content += `<img src="${data.img}" style="max-width:100%; margin-top:8px;">`;
+                            content += `<img src="${data.img}" style="max-width:100%; margin-top:8px; border:1px solid #222;">`;
                         } else {
                             content += `<p style="font-style:italic; color:var(--gold); font-size:0.65rem; margin-top:5px;">The Architect is watching... 😉</p>`;
                         }
