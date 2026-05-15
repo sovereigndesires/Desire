@@ -19,16 +19,14 @@
             background-attachment: fixed; transition: background 2s ease;
         }
 
-        /* Default Architect's View */
         .bg-default {
             background-image: linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95)), 
                               url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070');
         }
 
-        /* The Ghost Protocol (Amanda Only) */
         .bg-ghost {
             background-image: linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.75)), 
-                              url('IMG_5825.jpeg'); /* Your stored file */
+                              url('IMG_5825.jpeg');
         }
 
         .vault { 
@@ -38,17 +36,21 @@
             backdrop-filter: blur(12px);
         }
 
-        h1 { 
-            font-family: 'Cinzel', serif; letter-spacing: 10px; 
-            text-transform: uppercase; font-size: 1.6rem; color: #fff; 
-            margin-bottom: 5px;
-        }
+        h1 { font-family: 'Cinzel', serif; letter-spacing: 10px; text-transform: uppercase; font-size: 1.6rem; color: #fff; margin-bottom: 5px; }
         .header-sub { font-style: italic; color: var(--gold); font-size: 0.8rem; margin-bottom: 35px; letter-spacing: 2px; }
 
-        input, textarea { 
+        input { background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; padding: 15px; width: 90%; outline: none; margin-bottom: 15px; text-align: center; }
+
+        /* Resized Messaging Box with Scrollbar */
+        textarea { 
             background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; 
-            padding: 15px; width: 90%; outline: none; margin-bottom: 15px; text-align: center;
+            padding: 15px; width: 90%; outline: none; margin-bottom: 15px; 
+            height: 160px; /* Twice the original size */
+            resize: none; overflow-y: auto; font-family: 'Georgia', serif;
         }
+        
+        textarea::-webkit-scrollbar { width: 4px; }
+        textarea::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
         .btn { 
             border: 1px solid var(--gold); padding: 15px; color: var(--gold); 
@@ -57,7 +59,16 @@
         }
         .btn:hover { background: var(--gold); color: #000; }
 
-        .feed { text-align: left; margin-top: 30px; max-height: 350px; overflow-y: auto; border-top: 1px solid #222; padding-top: 20px; scrollbar-width: none; }
+        /* Fixed-size feed with scrollbar */
+        .feed { 
+            text-align: left; margin-top: 30px; 
+            height: 400px; /* Locked height */
+            overflow-y: auto; border-top: 1px solid #222; padding-top: 20px; 
+            scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
+        }
+        .feed::-webkit-scrollbar { width: 3px; }
+        .feed::-webkit-scrollbar-thumb { background: var(--gold); }
+
         .drop { background: rgba(15, 15, 15, 0.6); padding: 20px; border-left: 1px solid var(--gold); margin-bottom: 15px; }
         .drop-user { font-family: 'Cinzel'; font-size: 0.55rem; color: #666; margin-bottom: 5px; }
         
@@ -70,7 +81,7 @@
     <div class="vault" id="gatekeeper">
         <h1>Sovereign</h1>
         <p class="header-sub">Validation Required</p>
-        <input type="text" id="nameInput" placeholder="Name">
+        <input type="text" id="nameInput" placeholder="Credentials">
         <button class="btn" onclick="authenticate()">Unseal</button>
     </div>
 
@@ -102,20 +113,22 @@
         let userRole = "";
 
         function authenticate() {
-            const name = document.getElementById("nameInput").value.trim();
-            const lowerName = name.toLowerCase();
+            const nameInput = document.getElementById("nameInput").value.trim();
             const body = document.body;
             
-            if (lowerName === "jerry") { 
-                userRole = "Jerry"; 
+            if (nameInput === "The Architect") { 
+                userRole = "The Architect"; 
                 document.getElementById("burnBtn").style.display = "block";
-            } else if (lowerName === "amanda") { 
+            } else if (nameInput.toLowerCase() === "amanda") { 
                 userRole = "Amanda"; 
                 body.className = "bg-ghost"; 
-            } else { alert("Access Denied."); return; }
+            } else { 
+                // Any other name logs in as itself, but no special ghost background
+                userRole = nameInput; 
+            }
 
             document.getElementById("displayTitle").innerText = userRole.toUpperCase();
-            document.getElementById("tagline").innerText = (userRole === "Jerry") ? "Design with intent." : "Behold the masterpiece.";
+            document.getElementById("tagline").innerText = (userRole === "The Architect") ? "Design with intent." : "Behold the masterpiece.";
             document.getElementById("gatekeeper").style.display = "none";
             document.getElementById("suiteContent").style.display = "block";
             document.getElementById("interactionZone").style.display = "block";
@@ -128,14 +141,14 @@
                 feed.innerHTML = "";
                 snapshot.forEach((child) => {
                     const data = child.val();
-                    const isJerry = userRole === "Jerry";
+                    const isArchitect = userRole === "The Architect";
                     
                     let content = `<p style="color:#eee;">${data.text}</p>`;
                     if (data.img) {
-                        if (isJerry) {
-                            content += `<img src="${data.img}" style="max-width:100%; margin-top:10px;">`;
+                        if (isArchitect) {
+                            content += `<img src="${data.img}" style="max-width:100%; margin-top:10px; border:1px solid #222;">`;
                         } else {
-                            content += `<p style="font-style:italic; color:var(--gold); font-size:0.8rem; margin-top:10px;">The Architect is currently admiring your gift in private. You've definitely left an impression... 😉</p>`;
+                            content += `<p style="font-style:italic; color:var(--gold); font-size:0.8rem; margin-top:10px;">The Architect is currently admiring your gift in private... 😉</p>`;
                         }
                     }
 
