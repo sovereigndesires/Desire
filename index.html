@@ -29,50 +29,51 @@
                               url('IMG_5825.jpeg');
         }
 
+        /* Tightened Terminal Frame */
         .vault { 
-            border: 1px solid #2a2a2a; padding: 50px 35px; 
-            background: rgba(10, 10, 10, 0.9); box-shadow: 0 0 80px #000;
-            width: 100%; max-width: 480px; position: relative; z-index: 10;
-            backdrop-filter: blur(12px);
+            border: 1px solid #2a2a2a; padding: 30px 25px; 
+            background: rgba(10, 10, 10, 0.85); box-shadow: 0 0 60px #000;
+            width: 90%; max-width: 400px; position: relative; z-index: 10;
+            backdrop-filter: blur(8px);
         }
 
-        h1 { font-family: 'Cinzel', serif; letter-spacing: 10px; text-transform: uppercase; font-size: 1.6rem; color: #fff; margin-bottom: 5px; }
-        .header-sub { font-style: italic; color: var(--gold); font-size: 0.8rem; margin-bottom: 35px; letter-spacing: 2px; }
+        h1 { font-family: 'Cinzel', serif; letter-spacing: 8px; text-transform: uppercase; font-size: 1.3rem; color: #fff; margin-bottom: 5px; }
+        .header-sub { font-style: italic; color: var(--gold); font-size: 0.7rem; margin-bottom: 20px; letter-spacing: 2px; }
 
-        input { background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; padding: 15px; width: 90%; outline: none; margin-bottom: 15px; text-align: center; }
+        input { background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; padding: 10px; width: 85%; outline: none; margin-bottom: 12px; text-align: center; font-size: 0.8rem; }
 
-        /* Resized Messaging Box with Scrollbar */
+        /* Minimalist Messaging Box */
         textarea { 
             background: rgba(0,0,0,0.7); border: 1px solid #333; color: #fff; 
-            padding: 15px; width: 90%; outline: none; margin-bottom: 15px; 
-            height: 160px; /* Twice the original size */
-            resize: none; overflow-y: auto; font-family: 'Georgia', serif;
+            padding: 10px; width: 85%; outline: none; margin-bottom: 12px; 
+            height: 70px; /* Condensed size for visibility */
+            resize: none; overflow-y: auto; font-family: 'Georgia', serif; font-size: 0.85rem;
         }
         
-        textarea::-webkit-scrollbar { width: 4px; }
-        textarea::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        textarea::-webkit-scrollbar { width: 3px; }
+        textarea::-webkit-scrollbar-thumb { background: var(--gold); }
 
         .btn { 
-            border: 1px solid var(--gold); padding: 15px; color: var(--gold); 
-            cursor: pointer; background: transparent; letter-spacing: 4px; 
-            width: 100%; text-transform: uppercase; font-size: 0.7rem; font-weight: bold; transition: 0.5s; 
+            border: 1px solid var(--gold); padding: 12px; color: var(--gold); 
+            cursor: pointer; background: transparent; letter-spacing: 3px; 
+            width: 90%; text-transform: uppercase; font-size: 0.65rem; font-weight: bold; transition: 0.5s; 
         }
         .btn:hover { background: var(--gold); color: #000; }
 
-        /* Fixed-size feed with scrollbar */
+        /* Compact feed */
         .feed { 
-            text-align: left; margin-top: 30px; 
-            height: 400px; /* Locked height */
-            overflow-y: auto; border-top: 1px solid #222; padding-top: 20px; 
+            text-align: left; margin-top: 20px; 
+            height: 250px; /* More compact to show background */
+            overflow-y: auto; border-top: 1px solid #222; padding-top: 15px; 
             scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
         }
-        .feed::-webkit-scrollbar { width: 3px; }
+        .feed::-webkit-scrollbar { width: 2px; }
         .feed::-webkit-scrollbar-thumb { background: var(--gold); }
 
-        .drop { background: rgba(15, 15, 15, 0.6); padding: 20px; border-left: 1px solid var(--gold); margin-bottom: 15px; }
-        .drop-user { font-family: 'Cinzel'; font-size: 0.55rem; color: #666; margin-bottom: 5px; }
+        .drop { background: rgba(15, 15, 15, 0.5); padding: 15px; border-left: 1px solid var(--gold); margin-bottom: 10px; }
+        .drop-user { font-family: 'Cinzel'; font-size: 0.5rem; color: #555; margin-bottom: 3px; }
         
-        .file-label { font-size: 0.65rem; color: #888; cursor: pointer; border: 1px dashed #333; padding: 12px; display: block; margin-bottom: 15px; }
+        .file-label { font-size: 0.6rem; color: #666; cursor: pointer; border: 1px dashed #222; padding: 8px; display: block; margin-bottom: 10px; width: 85%; margin-left: auto; margin-right: auto; }
         #interactionZone { display: none; }
     </style>
 </head>
@@ -90,11 +91,11 @@
         <p class="header-sub" id="tagline"></p>
         <div class="feed" id="liveFeed"></div>
         <div id="interactionZone">
-            <textarea id="userMsg" placeholder="A thought for the Architect..."></textarea>
-            <label class="file-label" for="file-upload">ATTACH VISUAL EVIDENCE (+)</label>
+            <textarea id="userMsg" placeholder="A thought..."></textarea>
+            <label class="file-label" for="file-upload">VISUAL EVIDENCE (+)</label>
             <input type="file" id="file-upload" style="display:none;" accept="image/*">
-            <button class="btn" id="sendBtn" onclick="sendData()">Submit to Vault</button>
-            <button class="btn" id="burnBtn" style="display:none; color:#700; border-color:#400; margin-top:20px;" onclick="burnTheVault()">PURGE ALL DATA</button>
+            <button class="btn" id="sendBtn" onclick="sendData()">Transmit</button>
+            <button class="btn" id="burnBtn" style="display:none; color:#700; border-color:#400; margin-top:15px; font-size: 0.5rem;" onclick="burnTheVault()">PURGE VAULT</button>
         </div>
     </div>
 
@@ -123,7 +124,6 @@
                 userRole = "Amanda"; 
                 body.className = "bg-ghost"; 
             } else { 
-                // Any other name logs in as itself, but no special ghost background
                 userRole = nameInput; 
             }
 
@@ -142,16 +142,14 @@
                 snapshot.forEach((child) => {
                     const data = child.val();
                     const isArchitect = userRole === "The Architect";
-                    
-                    let content = `<p style="color:#eee;">${data.text}</p>`;
+                    let content = `<p style="color:#eee; font-size: 0.85rem;">${data.text}</p>`;
                     if (data.img) {
                         if (isArchitect) {
-                            content += `<img src="${data.img}" style="max-width:100%; margin-top:10px; border:1px solid #222;">`;
+                            content += `<img src="${data.img}" style="max-width:100%; margin-top:10px;">`;
                         } else {
-                            content += `<p style="font-style:italic; color:var(--gold); font-size:0.8rem; margin-top:10px;">The Architect is currently admiring your gift in private... 😉</p>`;
+                            content += `<p style="font-style:italic; color:var(--gold); font-size:0.7rem; margin-top:8px;">The Architect is admiring your gift... 😉</p>`;
                         }
                     }
-
                     feed.innerHTML = `<div class="drop"><div class="drop-user">${data.user}</div>${content}</div>` + feed.innerHTML;
                 });
             });
@@ -165,7 +163,7 @@
 
             if (!text && !fileInput.files[0]) return;
 
-            btn.innerText = "TRANSMITTING...";
+            btn.innerText = "...";
             if (fileInput.files[0]) {
                 const formData = new FormData();
                 formData.append("image", fileInput.files[0]);
@@ -177,7 +175,7 @@
             db.ref('vault').push({ user: userRole, text: text, img: imageUrl, timestamp: Date.now() });
             document.getElementById('userMsg').value = "";
             fileInput.value = "";
-            btn.innerText = "SUBMIT TO VAULT";
+            btn.innerText = "Transmit";
         }
 
         function burnTheVault() { if (confirm("Erase every trace?")) db.ref('vault').remove(); }
