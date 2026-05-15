@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap');
 
-        :root { --gold: #d4af37; --dark: #050505; }
+        :root { --gold: #d4af37; --dark: #050505; --grey: #8e8e8e; }
         
         body { 
             margin: 0; background: var(--dark); color: var(--gold); 
@@ -29,20 +29,18 @@
             margin: auto;
         }
 
-        /* The Alpha Silhouette */
+        /* The Grey Alpha - Large & Detailed */
         .wolf-icon {
             position: absolute;
-            top: -45px; /* Sits right on the top edge */
+            top: -100px; /* Adjusted for double size */
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            fill: none;
-            stroke: var(--gold);
-            stroke-width: 1.5;
-            opacity: 0.8;
-            filter: drop-shadow(0 0 5px var(--gold));
+            width: 120px; /* Twice the size */
+            height: 120px;
+            fill: var(--grey);
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
             z-index: 11;
+            pointer-events: none;
         }
 
         .vault { 
@@ -80,10 +78,17 @@
 <body>
 
     <div class="vault-container" id="gatekeeper">
-        <!-- SVG Alpha Wolf Outline -->
-        <svg class="wolf-icon" viewBox="0 0 24 24">
-            <path d="M12,2L13.5,5L16,4L15,7L18,8L16,10L19,13L16,14L17,17L14,16L13,19L11,16L8,17L9,14L6,13L9,10L7,8L10,7L9,4L11.5,5L12,2 M12,8C10.9,8 10,8.9 10,10C10,11.1 10.9,12 12,12C13.1,12 14,11.1 14,10C14,8.9 13.1,8 12,8Z" />
-            <path d="M12,2C12,2 14,6 16,8C18,10 21,11 21,11C21,11 19,12 17,13C15,14 14,17 14,17L12,15L10,17C10,17 9,14 7,13C5,12 3,11 3,11C3,11 6,10 8,8C10,6 12,2 12,2Z" stroke-linejoin="round" fill="none" />
+        <!-- New Detailed Grey Wolf Icon -->
+        <svg class="wolf-icon" viewBox="0 0 100 100">
+            <path d="M50 5 L55 25 L75 20 L65 35 L85 45 L70 55 L80 75 L60 70 L50 90 L40 70 L20 75 L30 55 L15 45 L35 35 L25 20 L45 25 Z" fill="none" />
+            <!-- Silhouette of a Howling Wolf -->
+            <path d="M48,15c0,0-5,10-15,15c-5,3-12,5-12,5s8,2,12,5c5,3,8,12,8,12s2-8,5-10s10-5,10-5s-8-2-10-5S48,15,48,15z M35,42c-2,10-8,15-15,18c10,2,15,8,18,15c2-10,8-15,15-18C43,55,38,49,35,42z" opacity="0.1"/>
+            <path d="M75.5,85.2c-1.1-2.3-3.2-5.4-4.8-6.2c-1.6-0.8-4.1-1-5.8-0.2c-1.7,0.8-2.6,3.4-3.4,5.4c-0.8,2-3,4.4-3,4.4s2.4,0.4,4.2-0.6c1.8-1,2.8-3.6,4.6-4.2c1.8-0.6,4.6,0.2,5.8,1.4C74.3,86.6,76.6,87.5,75.5,85.2z" opacity="0.3"/>
+            <path d="M50,10 C45,25,30,35,15,40 C30,45,40,55,45,75 C50,60,65,50,85,45 C70,40,55,30,50,10" />
+            <!-- Realistic Howling Wolf Silhouette -->
+            <path d="M38.2,35.5c0,0-2.1-4.8-5.3-7.4c-3.2-2.6-9.1-4.8-9.1-4.8s4.3,2.4,6.4,5.3c2.1,2.9,3.7,8,3.7,8s1.6-5.3,4.8-7.4c3.2-2.1,9.6-3.7,9.6-3.7s-5.9,1.1-8,3.2C38.2,30.7,38.2,35.5,38.2,35.5z M50,5c0,0-2,10-10,18c-8,8-15,10-25,12c15,5,20,12,25,25c5-15,12-20,25-25c-10-2-17-4-25-12C50,15,50,5,50,5z"/>
+            <!-- Detailed profile -->
+            <path d="M50,5 L52,15 C52,15 65,25 85,30 C65,35 55,50 52,70 C50,60 45,60 42,70 C39,50 29,35 9,30 C29,25 42,15 42,15 L44,5 L50,5 Z" />
         </svg>
         
         <div class="vault">
