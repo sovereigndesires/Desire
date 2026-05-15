@@ -18,49 +18,49 @@
             text-align: center; background-size: cover; background-position: center;
             background-attachment: fixed; transition: background 1.5s ease-in-out;
             overflow: hidden;
-            /* DARK CITYSCAPE: Barely visible shadows */
             background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.85)), 
                               url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?auto=format&fit=crop&q=80&w=2070');
         }
 
-        .vault-container { width: 85%; max-width: 350px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        /* Shrinking the container for better visibility */
+        .vault-container { width: 80%; max-width: 300px; display: flex; flex-direction: column; align-items: center; }
 
         .vault { 
-            border: 1px solid #2a2a2a; padding: 40px 20px; 
-            background: rgba(10, 10, 10, 0.95); box-shadow: 0 0 60px #000;
-            width: 100%; position: relative; z-index: 10; backdrop-filter: blur(10px);
+            border: 1px solid #2a2a2a; padding: 25px 15px; 
+            background: rgba(10, 10, 10, 0.9); box-shadow: 0 0 40px #000;
+            width: 100%; position: relative; z-index: 10; backdrop-filter: blur(8px);
         }
 
-        h1 { font-family: 'Cinzel', serif; letter-spacing: 8px; text-transform: uppercase; font-size: 1.2rem; color: #fff; margin-bottom: 5px; }
-        .header-sub { font-style: italic; color: var(--gold); font-size: 0.65rem; margin-bottom: 25px; letter-spacing: 2px; }
+        h1 { font-family: 'Cinzel', serif; letter-spacing: 6px; text-transform: uppercase; font-size: 1rem; color: #fff; margin-bottom: 5px; }
+        .header-sub { font-style: italic; color: var(--gold); font-size: 0.6rem; margin-bottom: 20px; letter-spacing: 2px; }
 
         input, textarea { 
             background: rgba(0,0,0,0.8); border: 1px solid #333; color: #fff; 
-            padding: 12px; width: 85%; outline: none; margin-bottom: 15px; 
-            text-align: center; font-size: 0.8rem; border-radius: 0; 
+            padding: 10px; width: 85%; outline: none; margin-bottom: 12px; 
+            text-align: center; font-size: 0.75rem; border-radius: 0; 
         }
 
         .btn { 
-            border: 1px solid var(--gold); padding: 12px; color: var(--gold); 
-            cursor: pointer; background: transparent; letter-spacing: 3px; 
-            width: 92%; text-transform: uppercase; font-size: 0.7rem; font-weight: bold; 
-            transition: 0.4s; margin-bottom: 10px;
+            border: 1px solid var(--gold); padding: 10px; color: var(--gold); 
+            cursor: pointer; background: transparent; letter-spacing: 2px; 
+            width: 90%; text-transform: uppercase; font-size: 0.65rem; font-weight: bold; 
+            transition: 0.4s; margin-bottom: 8px;
         }
         .btn:hover { background: var(--gold); color: #000; }
 
-        /* The File Upload Button */
         .file-label {
-            font-size: 0.6rem; color: #555; cursor: pointer; border: 1px dashed #333;
-            padding: 10px; display: block; margin-bottom: 15px; width: 85%;
+            font-size: 0.55rem; color: #666; cursor: pointer; border: 1px dashed #333;
+            padding: 8px; display: block; margin-bottom: 12px; width: 85%;
         }
 
-        .feed { text-align: left; margin-top: 20px; height: 280px; overflow-y: auto; border-top: 1px solid #222; padding-top: 15px; scrollbar-width: none; }
-        .drop { background: rgba(20, 20, 20, 0.5); padding: 15px; border-left: 2px solid var(--gold); margin-bottom: 15px; }
-        .drop-user { font-family: 'Cinzel'; font-size: 0.5rem; color: #666; text-transform: uppercase; margin-bottom: 5px; }
-        .drop img { max-width: 100%; margin-top: 10px; border: 1px solid #333; }
+        /* Compact feed for better background exposure */
+        .feed { text-align: left; margin-top: 15px; height: 220px; overflow-y: auto; border-top: 1px solid #222; padding-top: 10px; scrollbar-width: none; }
+        .drop { background: rgba(15, 15, 15, 0.6); padding: 10px; border-left: 1px solid var(--gold); margin-bottom: 10px; }
+        .drop-user { font-family: 'Cinzel'; font-size: 0.45rem; color: #555; text-transform: uppercase; margin-bottom: 3px; }
+        .drop img { max-width: 100%; margin-top: 8px; border: 1px solid #333; }
         
         #interactionZone { display: none; width: 100%; }
-        #burnBtn { color: #a00; border-color: #500; font-size: 0.55rem; margin-top: 20px; }
+        #burnBtn { color: #a00; border-color: #500; font-size: 0.5rem; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -69,8 +69,8 @@
         <div class="vault">
             <h1>Sovereign</h1>
             <p class="header-sub">Architectural Access Required</p>
-            <input type="text" id="nameInput" placeholder="Who enters?">
-            <button class="btn" onclick="authenticate()">Claim Access</button>
+            <input type="text" id="nameInput" placeholder="Identity?">
+            <button class="btn" onclick="authenticate()">Enter</button>
         </div>
     </div>
 
@@ -80,13 +80,13 @@
             <p class="header-sub" id="tagline"></p>
             <div class="feed" id="liveFeed"></div>
             <div id="interactionZone">
-                <textarea id="userMsg" placeholder="Leave a scent..."></textarea>
+                <textarea id="userMsg" placeholder="Message..."></textarea>
                 
-                <label class="file-label" for="file-upload">TRANSMIT EVIDENCE (+)</label>
+                <label class="file-label" for="file-upload">UPLOAD EVIDENCE (+)</label>
                 <input type="file" id="file-upload" style="display:none;" accept="image/*">
                 
-                <button class="btn" id="sendBtn" onclick="sendData()">Submit Transmission</button>
-                <button class="btn" id="burnBtn" style="display:none;" onclick="burnTheVault()">PURGE ALL RECORDS</button>
+                <button class="btn" id="sendBtn" onclick="sendData()">Submit</button>
+                <button class="btn" id="burnBtn" style="display:none;" onclick="burnTheVault()">PURGE VAULT</button>
             </div>
         </div>
     </div>
@@ -115,13 +115,13 @@
                 body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070')";
             } else if (nameInput.toLowerCase() === "amanda") { 
                 userRole = "Amanda"; 
-                body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.75)), url('IMG_5825.jpeg')";
+                body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.65), rgba(5, 5, 5, 0.65)), url('IMG_5825.jpeg')";
             } else { 
                 userRole = nameInput; 
             }
 
             document.getElementById("displayTitle").innerText = userRole.toUpperCase();
-            document.getElementById("tagline").innerText = (userRole === "The Architect") ? "The City is Yours." : "Welcome home, Lone Wolf.";
+            document.getElementById("tagline").innerText = (userRole === "The Architect") ? "System Overridden." : "Welcome home.";
             document.getElementById("gatekeeper").style.display = "none";
             document.getElementById("suiteContent").style.display = "block";
             document.getElementById("interactionZone").style.display = "block";
@@ -134,10 +134,8 @@
                 feed.innerHTML = "";
                 snapshot.forEach((child) => {
                     const data = child.val();
-                    let content = `<p style="color:#eee; font-size: 0.85rem; margin:0;">${data.text}</p>`;
-                    if (data.img) {
-                        content += `<img src="${data.img}">`;
-                    }
+                    let content = `<p style="color:#eee; font-size: 0.8rem; margin:0;">${data.text}</p>`;
+                    if (data.img) { content += `<img src="${data.img}">`; }
                     feed.innerHTML = `<div class="drop"><div class="drop-user">${data.user}</div>${content}</div>` + feed.innerHTML;
                 });
             });
@@ -151,7 +149,7 @@
 
             if (!text && !fileInput.files[0]) return;
 
-            btn.innerText = "TRANSMITTING...";
+            btn.innerText = "...";
             
             if (fileInput.files[0]) {
                 const formData = new FormData();
@@ -166,11 +164,11 @@
             db.ref('vault').push({ user: userRole, text: text, img: imageUrl, timestamp: Date.now() });
             document.getElementById('userMsg').value = "";
             fileInput.value = "";
-            btn.innerText = "Submit Transmission";
+            btn.innerText = "Submit";
         }
 
         function burnTheVault() { 
-            if (confirm("This will erase everything. Do you wish to leave no trace?")) {
+            if (confirm("Erase all data from the Sovereign Vault?")) {
                 db.ref('vault').remove(); 
             }
         }
