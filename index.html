@@ -17,7 +17,7 @@
             font-family: 'Playfair Display', serif; display: flex; 
             justify-content: center; align-items: center; min-height: 100vh; 
             text-align: center; 
-            background-size: cover; /* Default global background size */
+            background-size: cover; 
             background-position: center;
             background-attachment: fixed; transition: background 1.5s ease-in-out;
             overflow: hidden;
@@ -84,7 +84,7 @@
 </head>
 <body>
 
-<div class="vault-container" id="gatekeeper">
+    <div class="vault-container" id="gatekeeper">
         <div class="vault">
             <h1>Sovereign</h1>
             <p class="header-sub">Exclusive Access Protocol</p>
@@ -97,13 +97,6 @@
                 <source src="hunt.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-        </div>
-    </div>
-        <div class="vault">
-            <h1>Sovereign</h1>
-            <p class="header-sub">Exclusive Access Protocol</p>
-            <input type="text" id="nameInput" placeholder="Who enters?">
-            <button class="btn" onclick="authenticate()">Claim Access</button>
         </div>
     </div>
 
@@ -161,7 +154,7 @@
                 // Sets background for Amanda
                 body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.70), rgba(5, 5, 5, 0.70)), url('IMG_5825.jpg')";
                 
-                // NEW ADDITION: Forces the background to be dynamically sized to 100% of screen width (vw) and height (vh)
+                // Forces the background to be dynamically sized to 100% of screen width (vw) and height (vh)
                 body.style.backgroundSize = "100vw 100vh"; 
                 
             } else { 
