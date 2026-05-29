@@ -35,7 +35,6 @@
             backdrop-filter: blur(8px);
         }
 
-        /* Video Wrapper & Button Styling */
         .video-wrapper { position: relative; margin-top: 15px; width: 100%; border: 1px solid #2a2a2a; }
         
         #unmuteBtn {
@@ -77,7 +76,7 @@
             padding: 8px; display: block; margin-bottom: 12px; width: 85%;
         }
 
-        .feed { text-align: left; margin-top: 15px; height: 220px; overflow-y: auto;
+        .feed { text-align: left; margin-top: 15px; height: 180px; overflow-y: auto;
         border-top: 1px solid #222; padding-top: 10px; scrollbar-width: none; }
         
         .drop { background: rgba(15, 15, 15, 0.6);
@@ -89,9 +88,10 @@
         .drop img { max-width: 100%;
         margin-top: 8px; border: 1px solid #333; }
         
-        #interactionZone { display: none; width: 100%; }
+        #interactionZone, #userManagement { display: none; width: 100%; }
         
         #burnBtn { color: #a00; border-color: #500; font-size: 0.5rem; margin-top: 15px; }
+        .user-item { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #222; font-size: 0.6rem; color: #fff; }
     </style>
 </head>
 <body>
@@ -108,7 +108,6 @@
             <button id="unmuteBtn" onclick="enableAudio()">Enable Audio</button>
             <video id="bgVideo" width="100%" autoplay muted loop playsinline>
                 <source src="hunt.mp4" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
         </div>
     </div>
@@ -118,20 +117,26 @@
             <h1 id="displayTitle"></h1>
             <p class="header-sub" id="tagline"></p>
             <div class="feed" id="liveFeed"></div>
+            
             <div id="interactionZone">
                 <textarea id="userMsg" placeholder="Leave a scent..."></textarea>
-                
                 <label class="file-label" for="file-upload">UPLOAD EVIDENCE (+)</label>
                 <input type="file" id="file-upload" style="display:none;" accept="image/*">
-                
                 <button class="btn" id="sendBtn" onclick="sendData()">Submit Transmission</button>
+                
+                <div id="userManagement">
+                    <h2 style="font-size: 0.6rem; border-top: 1px solid #333; padding-top: 10px;">OPERATIVE MANAGEMENT</h2>
+                    <input type="text" id="newUsername" placeholder="Enter new username...">
+                    <button class="btn" onclick="addOperative()">Grant Access</button>
+                    <div id="operativeList"></div>
+                </div>
+
                 <button class="btn" id="burnBtn" style="display:none;" onclick="burnTheVault()">PURGE ALL RECORDS</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Database Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCD5JEgpo7rckS_FR0s1DTTgwLIDTno4FA",
             authDomain: "private-suite.firebaseapp.com",
@@ -146,7 +151,7 @@
         const imgbbKey = "318eb162e33966a8be888187ab3997f0";
         let userRole = "";
 
-        // Unmute Function
+        // Unmute
         function enableAudio() {
             const video = document.getElementById("bgVideo");
             const btn = document.getElementById("unmuteBtn");
@@ -154,22 +159,27 @@
             btn.style.display = "none";
         }
 
-        // Authentication & Display Logic
-        function authenticate() {
+        // Authentication Logic with dynamic check
+        async function authenticate() {
             const nameInput = document.getElementById("nameInput").value.trim();
             const body = document.body;
+            
+            // Check dynamic users
+            const snapshot = await db.ref('allowedUsers').once('value');
+            const allowedUsers = snapshot.val() || {};
+            
+            const video = document.getElementById("bgVideo");
+            video.pause();
             
             if (nameInput === "The Architect") { 
                 userRole = "The Architect";
                 document.getElementById("burnBtn").style.display = "block";
-                body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070')";
-                body.style.backgroundSize = "cover";
-            } else if (nameInput.toLowerCase() === "amanda") { 
-                userRole = "Amanda";
-                body.style.backgroundImage = "linear-gradient(rgba(5, 5, 5, 0.70), rgba(5, 5, 5, 0.70)), url('IMG_5825.jpg')";
-                body.style.backgroundSize = "100vw 100vh"; 
+                document.getElementById("userManagement").style.display = "block";
+                loadOperatives();
+            } else if (allowedUsers[nameInput.toLowerCase()] || nameInput.toLowerCase() === "amanda") { 
+                userRole = nameInput;
             } else { 
-                alert("Access Denied. You don't belong here.");
+                alert("Access Denied.");
                 document.getElementById("nameInput").value = "";
                 return;
             }
@@ -182,7 +192,31 @@
             loadFeed();
         }
 
-        // Data Logic (Kept from original)
+        // User Management Functions
+        function addOperative() {
+            const name = document.getElementById("newUsername").value.trim().toLowerCase();
+            if (name) {
+                db.ref('allowedUsers/' + name).set(true);
+                document.getElementById("newUsername").value = "";
+            }
+        }
+
+        function removeOperative(name) {
+            db.ref('allowedUsers/' + name).remove();
+        }
+
+        function loadOperatives() {
+            db.ref('allowedUsers').on('value', (snap) => {
+                const list = document.getElementById("operativeList");
+                list.innerHTML = "";
+                snap.forEach(child => {
+                    const name = child.key;
+                    list.innerHTML += `<div class="user-item"><span>${name}</span><button onclick="removeOperative('${name}')" style="background:none; border:none; color:red; cursor:pointer;">X</button></div>`;
+                });
+            });
+        }
+
+        // Existing functions...
         function loadFeed() {
             db.ref('vault').on('value', (snapshot) => {
                 const feed = document.getElementById('liveFeed');
@@ -201,10 +235,8 @@
             const fileInput = document.getElementById('file-upload');
             const btn = document.getElementById('sendBtn');
             let imageUrl = "";
-
             if (!text && !fileInput.files[0]) return;
             btn.innerText = "...";
-            
             if (fileInput.files[0]) {
                 const formData = new FormData();
                 formData.append("image", fileInput.files[0]);
@@ -214,16 +246,13 @@
                     imageUrl = result.data.url;
                 } catch (e) { console.error("Upload failed"); }
             }
-
             db.ref('vault').push({ user: userRole, text: text, img: imageUrl, timestamp: Date.now() });
             document.getElementById('userMsg').value = "";
             fileInput.value = "";
             btn.innerText = "Submit Transmission";
         }
 
-        function burnTheVault() { 
-            if (confirm("Erase all evidence of the hunt?")) { db.ref('vault').remove(); }
-        }
+        function burnTheVault() { if (confirm("Erase all evidence of the hunt?")) { db.ref('vault').remove(); } }
     </script>
 </body>
 </html>
